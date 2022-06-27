@@ -1,0 +1,110 @@
+﻿@model IEnumerable<HostelManagementSystem.Models.StudentModel>
+
+@{
+    ViewBag.Title = "GetAllRecords";
+}
+
+<h2>AllRecords</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="students">
+    <tr>
+        <th>
+
+
+
+            @Html.DisplayNameFor(model => model.FirstName)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a onclick="GetData(@item.Id)" class="anchorDetail" data-id="@item.Id">  @Html.DisplayFor(modelItem => item.FirstName)  </a>
+
+                @*@Html.DisplayFor(modelItem => item.FirstName, new { onclick=GetData(item.Id) })*@
+
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                @* @Html.ActionLink("Details", "Details", new { id=item.Id }) | *@
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+
+
+
+</table>
+
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function GetData(id) {
+            $.ajax({
+                type: "GET",
+                url: "/Home/Details",
+                data: { "Id": id },
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    //$('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                },
+
+
+            });
+        }
+
+       
+        $('.close').click(function () {
+            console.log('hello');
+            $("#myModal").modal('hide');
+
+        });
+         
+
+
+
+    </script>
