@@ -26,5 +26,6 @@ namespace HostelManagementSystem
         }
     
         public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

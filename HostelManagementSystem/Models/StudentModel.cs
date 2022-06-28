@@ -24,6 +24,9 @@ namespace HostelManagementSystem.Models
         public string Address { get; set; } 
 
 
+        public bool IsDeleted { get; set; }
+
+
 
     }
 }

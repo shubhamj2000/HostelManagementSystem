@@ -104,7 +104,7 @@ namespace HostelManagementSystem.Controllers
 
 
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id   )
         {
 
             repository.DeleteStudent(id);

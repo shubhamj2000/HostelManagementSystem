@@ -23,7 +23,7 @@ namespace HostelManagementSystem.DbOperations
                     Address = model.Address
                 };
 
-              
+
 
 
                 context.Student.Add(std);
@@ -46,16 +46,16 @@ namespace HostelManagementSystem.DbOperations
             using (var context = new StudentDBEntities())
             {
 
-                List<StudentModel> result = context.Student
+                List<StudentModel> result = context.Student.Where(x=>x.isDeleted == false)
                     .Select(x => new StudentModel()
                     {
                         Id = x.Id,
-                        
-                      
+
+
                         Email = x.Email,
                         FirstName = x.FirstName,
                         LastName = x.LastName,
-                        Address =  x.Address,
+                        Address = x.Address,
                     }).ToList();
 
                 return result;
@@ -85,11 +85,11 @@ namespace HostelManagementSystem.DbOperations
 
 
                         Id = x.Id,
-                      
+
                         Email = x.Email,
                         FirstName = x.FirstName,
                         LastName = x.LastName,
-                        Address=x.Address
+                        Address = x.Address
 
                     }).FirstOrDefault();
 
@@ -115,7 +115,7 @@ namespace HostelManagementSystem.DbOperations
                 Student.Id = model.Id;
                 Student.FirstName = model.FirstName;
                 Student.LastName = model.LastName;
-                Student.Email = model.Email;             
+                Student.Email = model.Email;
                 Student.Address = model.Address;
 
                 context.Entry(Student).State = System.Data.Entity.EntityState.Modified;// Entity framework feature
@@ -131,16 +131,17 @@ namespace HostelManagementSystem.DbOperations
             using (var context = new StudentDBEntities())
             {
 
-                var std = new Student()
-                {
-                    Id = id
-                };
+                //var std = new Student()
+                //{
+                //   Id = id
+                //};
 
 
-                context.Entry(std).State = System.Data.Entity.EntityState.Deleted; //->Entity framework feature
-
+                //context.Entry(std).State = System.Data.Entity.EntityState.Deleted; //->Entity framework feature
+                var stdc = context.Student.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
+                stdc.isDeleted = true;
                 context.SaveChanges(); // here Db will hit only one time
-                return false;
+                return true;
             }
         }
 
