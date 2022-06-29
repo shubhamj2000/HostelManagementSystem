@@ -26,6 +26,21 @@ namespace HostelManagementSystem.Models
 
         public bool IsDeleted { get; set; }
 
+        [Required]
+        [DataType(DataType.Date)]
+        public System.DateTime DOB { get; set; }
+
+        public bool isActive { get; set; }
+
+        public int? GenderId  { get; set; }
+
+      
+        public GenderModel gender { get; set; }
+
+
+
+        public List<GenderModel> Genders { get; set; }
+
 
 
     }

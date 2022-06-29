@@ -13,10 +13,10 @@ namespace HostelManagementSystem
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StudentDBEntities : DbContext
+    public partial class StudentDBEntities1 : DbContext
     {
-        public StudentDBEntities()
-            : base("name=StudentDBEntities")
+        public StudentDBEntities1()
+            : base("name=StudentDBEntities1")
         {
         }
     
@@ -25,7 +25,8 @@ namespace HostelManagementSystem
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Student> Student { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Gender> Genders { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

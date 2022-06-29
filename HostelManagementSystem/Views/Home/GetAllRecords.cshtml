@@ -6,9 +6,16 @@
 
 <h2>AllRecords</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
+
+</p>*@
+
+<p>
+    <button type="button" class="btn btn-primary" onclick="CreateData()">Create</button>
 </p>
+
+
 <table id="students">
     <tr>
         <th>
@@ -27,14 +34,22 @@
         <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gender)
+        </th>
+         <th>  Status </th>
+        <th> delete </th>
+        
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                <a onclick="GetData(@item.Id)" class="anchorDetail" >  @Html.DisplayFor(modelItem => item.FirstName)  </a>
+                <a onclick="GetData(@item.Id)" class="anchorDetail">  @Html.DisplayFor(modelItem => item.FirstName)  </a>
 
                 @*@Html.DisplayFor(modelItem => item.FirstName, new { onclick=GetData(item.Id) })*@
 
@@ -50,6 +65,22 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gender.Name)
+            </td>
+            <td>
+                @if (item.isActive)
+                {
+                    <h5> Active </h5>
+                }
+                else
+                {
+                    <h5> InActive </h5>
+                }
+            </td>
+            <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
                 @* @Html.ActionLink("Details", "Details", new { id=item.Id }) | *@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
@@ -63,6 +94,29 @@
 </table>
 
 
+
+<div id='CreateModal' class='modal'>
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="modal-title" id="myModalLabel">Create Student</h3>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div id='CreateModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
 <div id='myModal' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -73,38 +127,70 @@
 </div>
 
 
-    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script>
-        function GetData(id) {
-            $.ajax({
-                type: "GET",
-                url: "/Home/Details",
-                data: { "Id": id },
-                success: function (data) {
-                    debugger;
-                    $('#myModalContent').html(data);
-                    //$('#myModal').modal(options);
-                    $('#myModal').modal('show');
-
-                },
-                error: function () {
-                    alert("Dynamic content load failed.");
-                },
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
 
 
-            });
-        }
 
-       
-        $('.close').click(function () {
-            console.log('hello');
-            $("#myModal").modal('hide');
+    function CreateData() {
+        $.ajax({
+            type: "GET",
+            url: "/Home/Create",
+            success: function (data) {
+                debugger;
+                $('#CreateModalContent').html(data);
+                //$('#myModal').modal(options);
+                $('#CreateModal').fadeIn(800);
+                $('#CreateModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            },
+        });
+    }
+
+
+
+
+
+
+    function GetData(id) {
+        $.ajax({
+            type: "GET",
+            url: "/Home/Details",
+            data: { "Id": id },
+            success: function (data) {
+                debugger;
+                $('#myModalContent').html(data);
+                //$('#myModal').modal(options);
+                $('#myModal').modal('show');
+
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            },
+
 
         });
-         
+    }
+
+
+    $('.close').click(function () {
+        console.log('hello');
+        $("#myModal").modal('hide');
+
+    });
 
 
 
-    </script>
+
+
+
+
+
+
+
+
+</script>

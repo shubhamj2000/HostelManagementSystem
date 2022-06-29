@@ -28,7 +28,11 @@ namespace HostelManagementSystem.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            var model = new StudentModel();
+            model.Genders = repository.GetGenders();
+            ViewBag.issuccess = TempData["success"];
+
+            return PartialView("_Create",model);
         }
 
         [HttpPost]
@@ -44,18 +48,20 @@ namespace HostelManagementSystem.Controllers
                 {
 
                     ModelState.Clear();
-                    ViewBag.Issuccess = " Data Added ";
+                    // ViewBag.Issuccess = " Data Added ";
 
+                    TempData["success"] = "data added";
                 }
-
+                
+                return RedirectToAction("GetAllRecords");
 
             }
 
 
 
+            return RedirectToAction("GetAllRecords");
 
-
-            return View();
+         //   return View(); ---> previous running state
 
         }
 
@@ -73,6 +79,7 @@ namespace HostelManagementSystem.Controllers
         {
 
             var student = repository.GetStudent(Id);
+            student.Genders = repository.GetGenders();
             return PartialView("_Details",student);
 
         }
@@ -81,8 +88,10 @@ namespace HostelManagementSystem.Controllers
         {
 
             var student = repository.GetStudent(id);
-            return View(student);
+            student.Genders = repository.GetGenders();
+            //return View(student);
 
+            return PartialView(student);
         }
 
         [HttpPost]
@@ -98,7 +107,7 @@ namespace HostelManagementSystem.Controllers
             }
 
 
-            return View();
+            return View(model);
 
         }
 

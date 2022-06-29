@@ -12,7 +12,7 @@ namespace HostelManagementSystem.DbOperations
         public int AddStudent(StudentModel model)
         {
 
-            using (var context = new StudentDBEntities())
+            using (var context = new StudentDBEntities1())
             {
 
                 Student std = new Student()
@@ -20,13 +20,16 @@ namespace HostelManagementSystem.DbOperations
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                    Address = model.Address
+                    Address = model.Address,
+                    DOB=model.DOB,
+                    GenderId=model.GenderId,
+                    isActive = model.isActive,
                 };
 
 
 
 
-                context.Student.Add(std);
+                context.Students.Add(std);
 
                 context.SaveChanges();
 
@@ -40,13 +43,47 @@ namespace HostelManagementSystem.DbOperations
         }
 
 
+
+        public List<Models.GenderModel> GetGenders()
+        {
+
+            try
+            {
+                using (var context = new StudentDBEntities1())
+                {
+
+                    var abc = context.Genders.Select(x => new Models.GenderModel
+                    {
+                        id = x.id,
+                        Name = x.Name
+                    }).ToList();
+
+                    return abc;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+        }
+
+
+
+
+
+
+
         public List<StudentModel> GetAllStudents()
         {
 
-            using (var context = new StudentDBEntities())
+            using (var context = new StudentDBEntities1())
             {
 
-                List<StudentModel> result = context.Student.Where(x=>x.isDeleted == false)
+                List<StudentModel> result = context.Students.Where(x=>x.isDeleted == false)
                     .Select(x => new StudentModel()
                     {
                         Id = x.Id,
@@ -56,6 +93,15 @@ namespace HostelManagementSystem.DbOperations
                         FirstName = x.FirstName,
                         LastName = x.LastName,
                         Address = x.Address,
+                        DOB = (DateTime)x.DOB,
+                        gender= new Models.GenderModel() { 
+                        
+                        Name=x.Gender.Name,
+
+                        },
+                         isActive = x.isActive,
+
+
                     }).ToList();
 
                 return result;
@@ -75,10 +121,10 @@ namespace HostelManagementSystem.DbOperations
         public StudentModel GetStudent(int id)
         {
 
-            using (var context = new StudentDBEntities())
+            using (var context = new StudentDBEntities1())
             {
 
-                var result = context.Student
+                var result = context.Students
                     .Where(x => x.Id == id).
                     Select(x => new StudentModel()
                     {
@@ -89,7 +135,11 @@ namespace HostelManagementSystem.DbOperations
                         Email = x.Email,
                         FirstName = x.FirstName,
                         LastName = x.LastName,
-                        Address = x.Address
+                        Address = x.Address,
+                        DOB =  (DateTime)x.DOB,
+                        //Models.GenderId= x.GenderId
+                        GenderId = x.GenderId,
+                        isActive = x.isActive
 
                     }).FirstOrDefault();
 
@@ -107,7 +157,7 @@ namespace HostelManagementSystem.DbOperations
 
         public bool UpdateStudent(int id, StudentModel model)
         {
-            using (var context = new StudentDBEntities())
+            using (var context = new StudentDBEntities1())
             {
 
                 var Student = new Student();
@@ -117,6 +167,9 @@ namespace HostelManagementSystem.DbOperations
                 Student.LastName = model.LastName;
                 Student.Email = model.Email;
                 Student.Address = model.Address;
+                Student.DOB= (DateTime)model.DOB;
+                Student.GenderId = model.GenderId;
+                Student.isActive = model.isActive;
 
                 context.Entry(Student).State = System.Data.Entity.EntityState.Modified;// Entity framework feature
                 context.SaveChanges();// Db will hit here only one time
@@ -128,7 +181,7 @@ namespace HostelManagementSystem.DbOperations
 
         public bool DeleteStudent(int id)
         {
-            using (var context = new StudentDBEntities())
+            using (var context = new StudentDBEntities1())
             {
 
                 //var std = new Student()
@@ -138,7 +191,7 @@ namespace HostelManagementSystem.DbOperations
 
 
                 //context.Entry(std).State = System.Data.Entity.EntityState.Deleted; //->Entity framework feature
-                var stdc = context.Student.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
+                var stdc = context.Students.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
                 stdc.isDeleted = true;
                 context.SaveChanges(); // here Db will hit only one time
                 return true;
