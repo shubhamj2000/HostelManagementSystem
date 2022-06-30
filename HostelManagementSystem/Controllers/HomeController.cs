@@ -52,8 +52,12 @@ namespace HostelManagementSystem.Controllers
 
                     TempData["success"] = "data added";
                 }
-                
+
+               
+
                 return RedirectToAction("GetAllRecords");
+
+             
 
             }
 
@@ -65,6 +69,9 @@ namespace HostelManagementSystem.Controllers
 
         }
 
+
+
+   
 
         public ActionResult GetAllRecords()
         {

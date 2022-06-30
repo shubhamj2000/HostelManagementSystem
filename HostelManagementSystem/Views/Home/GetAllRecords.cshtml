@@ -4,7 +4,7 @@
     ViewBag.Title = "GetAllRecords";
 }
 
-<h2>AllRecords</h2>
+<h2 class="text-muted" >AllRecords</h2>
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -16,7 +16,7 @@
 </p>
 
 
-<table id="students">
+<table id="students" class="table text-center">
     <tr>
         <th>
 
@@ -41,7 +41,7 @@
             @Html.DisplayNameFor(model => model.gender)
         </th>
          <th>  Status </th>
-        <th> delete </th>
+        <th> Delete </th>
         
     </tr>
 
@@ -73,17 +73,17 @@
             <td>
                 @if (item.isActive)
                 {
-                    <h5> Active </h5>
+                    <h5 style="color:limegreen;" > Active </h5>
                 }
                 else
                 {
-                    <h5> InActive </h5>
+                    <h5 style="color:red;" > InActive </h5>
                 }
             </td>
-            <td>
+            <td >
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
                 @* @Html.ActionLink("Details", "Details", new { id=item.Id }) | *@
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
@@ -118,13 +118,28 @@
 
 
 <div id='myModal' class='modal'>
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog ">
+        <div class="modal-content  ">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Student Information</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+
+                @* ERROR**  data-bs-dismiss instead of data-dismi *@
+
+            </div>
+
             <div id='myModalContent'></div>
         </div>
     </div>
 
 </div>
+
+
+
+
+
+
+
 
 
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
@@ -165,6 +180,7 @@
                 debugger;
                 $('#myModalContent').html(data);
                 //$('#myModal').modal(options);
+                $('#myModal' ).fadeIn(800);
                 $('#myModal').modal('show');
 
             },
@@ -175,6 +191,11 @@
 
         });
     }
+
+
+
+
+
 
 
     $('.close').click(function () {

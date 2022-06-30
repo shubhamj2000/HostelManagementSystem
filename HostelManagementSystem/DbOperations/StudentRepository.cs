@@ -83,7 +83,7 @@ namespace HostelManagementSystem.DbOperations
             using (var context = new StudentDBEntities1())
             {
 
-                List<StudentModel> result = context.Students.Where(x=>x.isDeleted == false)
+                List<StudentModel> result = context.Students.Where(x=>x.isDeleted == false )
                     .Select(x => new StudentModel()
                     {
                         Id = x.Id,

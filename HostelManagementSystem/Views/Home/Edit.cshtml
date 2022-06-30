@@ -57,26 +57,39 @@
         </div>
     </div>
 
-    <br />
+    
     <div class="form-group">
-        @Html.DropDownListFor(model => model.GenderId, new SelectList(Model.Genders, "id", "Name"))
-    </div>
-    <br />
-
-    <br />
-    <div class="form-group">
-        @Html.CheckBoxFor(model => model.isActive)
-        @*@Html.DropDownListFor(model => model.StatusId, new SelectList(Model.Statuss, "Id", "Name"))*@
-    </div>
-    <br />
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-primary" />
+        <label class="control-label col-md-2" >Gender</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.GenderId, new SelectList(Model.Genders, "id", "Name"))
         </div>
-    </div>
-</div>
+     </div>
+        <br />
+
+        <br />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">State</label>
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.isActive)
+
+            </div>
+         </div>
+            <br />
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+   </div>
+  
+
+
+
 }
 
 <div>
