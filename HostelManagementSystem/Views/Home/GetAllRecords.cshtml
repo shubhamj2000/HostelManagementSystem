@@ -4,17 +4,19 @@
     ViewBag.Title = "GetAllRecords";
 }
 
-<h2 class="text-muted" >AllRecords</h2>
+<h2 class="text-muted">AllRecords</h2>
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create New", "Create")
 
-</p>*@
+    </p>*@
 
 <p>
     <button type="button" class="btn btn-primary" onclick="CreateData()">Create</button>
 </p>
 
+<button id="btnSelectAll">Select all</button>
+<button id="btnSubmit">Get Value</button>
 
 <table id="students" class="table text-center">
     <tr>
@@ -40,14 +42,17 @@
         <th>
             @Html.DisplayNameFor(model => model.gender)
         </th>
-         <th>  Status </th>
+        <th>  Status </th>
+        <th>
+            Select All <input type="checkbox" id="checkBoxAll" />
+        </th>
         <th> Delete </th>
-        
+
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr >
             <td>
                 <a onclick="GetData(@item.Id)" class="anchorDetail">  @Html.DisplayFor(modelItem => item.FirstName)  </a>
 
@@ -73,14 +78,19 @@
             <td>
                 @if (item.isActive)
                 {
-                    <h5 style="color:limegreen;" > Active </h5>
+                    <h5 style="color:limegreen;"> Active </h5>
                 }
                 else
                 {
-                    <h5 style="color:red;" > InActive </h5>
+                    <h5 style="color:red;"> InActive </h5>
                 }
             </td>
-            <td >
+            
+            <td class="findtd">
+                <input type="checkbox" id="tick" class="chkCheckBoxId" value="@item.Id" name="StudentId" />
+            </td>
+                
+            <td>
                 @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
                 @* @Html.ActionLink("Details", "Details", new { id=item.Id }) | *@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
@@ -145,7 +155,37 @@
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script src="~/Scripts/bootstrap.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+
+
+
+
+    $(document).ready(function () {
+        var Result = new Array();
+        $('#btnSubmit').click(function () {
+
+            $('input[type = checkbox][name = StudentId]: checked').each(function () {
+                var id ;
+                id = $('#tick').val();
+
+                Result.Push(id);
+                alert(id);
+            })
+
+        })
+
+
+        $('#btnSelectAll').click(function () {
+
+            $('.row-select input').each(function () {
+                $(this).prop('checked', true);
+            })
+
+        })
+
+    })
+
 
 
 
@@ -193,9 +233,17 @@
     }
 
 
+   $(document).ready(function() {
+       if ('@TempData["success"]' != '') {
+           swal("Created","Data added successfully","success");
+       }
+  });
 
-
-
+       $(document).ready(function() {
+       if ('@TempData["dataDeleted"]' != '') {
+           swal("Deleted!","Data Deleted","success");
+       }
+  });
 
 
     $('.close').click(function () {
@@ -206,7 +254,16 @@
 
 
 
+    $(document).ready(function () {
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked"))
+                $('.chkCheckBoxId').prop('checked', true);
+            else
+                $('.chkCheckBoxId').prop('checked', false);
+        });
 
+
+    });
 
 
 

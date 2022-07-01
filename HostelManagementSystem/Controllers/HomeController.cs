@@ -30,7 +30,7 @@ namespace HostelManagementSystem.Controllers
         {
             var model = new StudentModel();
             model.Genders = repository.GetGenders();
-            ViewBag.issuccess = TempData["success"];
+           
 
             return PartialView("_Create",model);
         }
@@ -38,7 +38,7 @@ namespace HostelManagementSystem.Controllers
         [HttpPost]
         public ActionResult Create(StudentModel model)
         {
-
+           
 
             if (ModelState.IsValid)
             {
@@ -75,6 +75,9 @@ namespace HostelManagementSystem.Controllers
 
         public ActionResult GetAllRecords()
         {
+            //if (TempData["success"] != null) {
+            //    ViewBag.issuccess = TempData["success"];
+            //}
 
             List<StudentModel> result = repository.GetAllStudents();
             return View(result);
@@ -124,6 +127,8 @@ namespace HostelManagementSystem.Controllers
         {
 
             repository.DeleteStudent(id);
+
+            TempData["dataDeleted"] = "data deleted";
 
             return RedirectToAction("GetAllRecords");
 
