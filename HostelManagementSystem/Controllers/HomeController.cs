@@ -13,7 +13,8 @@ namespace HostelManagementSystem.Controllers
     public class HomeController : Controller
     {
         StudentRepository repository = null;
-
+  
+  // git changes reflected
 
         public HomeController()
         {
