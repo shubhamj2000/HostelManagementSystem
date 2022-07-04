@@ -119,17 +119,22 @@ namespace HostelManagementSystem.DbOperations
 
         public bool MultipleDelete(int[] id)
         {
-            using (var context = new StudentDBEntities1())
-            {
-                var del = context.Students.Where(x => id.Contains(x.Id)&& x.isDeleted == false).ToList();
-
-                foreach (var item in del)
+            bool check = false;
+            if (id!=null) {
+                using (var context = new StudentDBEntities1())
                 {
-                    item.isDeleted = true;
+                    var del = context.Students.Where(x => id.Contains(x.Id) && x.isDeleted == false).ToList();
+
+                    foreach (var item in del)
+                    {
+                        item.isDeleted = true;
+                    }
+                    context.SaveChanges();
+                    check = true;
+                    return check;
                 }
-                context.SaveChanges();
-                return true;
             }
+            return check;
         }
 
 

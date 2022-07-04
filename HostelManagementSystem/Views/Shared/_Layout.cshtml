@@ -1,53 +1,55 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.8.3.js"></script>
-
+    @*<script src="~/Scripts/modernizr-2.8.3.js"></script>*@
+    <script src="https://kit.fontawesome.com/6ff5753400.js" crossorigin="anonymous"></script>
     <style>
-        #students {
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-            #students td, #students th {
-                border: 1px solid #ddd;
-                padding: 8px;
+            #students {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
             }
 
-            #students tr:nth-child(even) {
-                background-color: #f2f2f2;
+                #students td, #students th {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+
+                #students tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                #students tr:hover {
+                    background-color: #ddd;
+                }
+
+                #students th {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    text-align: center;
+                    background-color: cornflowerblue;
+                    color: white;
+                }
+
+            .navbar-brand {
+                padding-top: 0.3125rem;
+                padding-bottom: 0.3125rem;
+                margin-right: 1rem;
+                font-size: 2rem;
+                text-decoration: none;
+                white-space: nowrap;
             }
 
-            #students tr:hover {
-                background-color: #ddd;
-            }
+      
 
-            #students th {
-                padding-top: 12px;
-                padding-bottom: 12px;
-                text-align: center;
-                background-color: dodgerblue;
-                color: white;
-            }
-
-        .navbar-brand {
-            padding-top: 0.3125rem;
-            padding-bottom: 0.3125rem;
-            margin-right: 1rem;
-            font-size: 2rem;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-
-    </style>
+        </style>
 
 
 </head>
@@ -79,9 +81,9 @@
         </footer>
     </div>
    
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    @RenderSection("scripts",required:false)
+    @RenderSection("scripts",required:false)*@
 
 </body>
 </html>

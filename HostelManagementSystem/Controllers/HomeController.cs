@@ -89,13 +89,15 @@ namespace HostelManagementSystem.Controllers
 
 
 
-        public ActionResult MultipleDelete(int[] multidelete)
+        public bool MultipleDelete(int[] multidelete)
         {
+
+
             try
             {
-                repository.MultipleDelete(multidelete);
-
-                return RedirectToAction("GetAllRecords");
+                var a =repository.MultipleDelete(multidelete);
+                TempData["multipleDeleteSuccessful"] = "data added";
+                return a;
             }
             catch (Exception ex)
             {
