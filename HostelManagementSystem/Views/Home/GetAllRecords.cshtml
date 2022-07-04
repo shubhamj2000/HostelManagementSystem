@@ -4,7 +4,7 @@
     ViewBag.Title = "GetAllRecords";
 }
 
-<h2 class="text-muted">AllRecords</h2>
+<h2 class="text-muted">List Of Students</h2>
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -13,90 +13,98 @@
 
 <p>
     <button type="button" class="btn btn-primary" onclick="CreateData()">Create</button>
+    <button type="button" id="btnsubmit" class="btn btn-danger">Delete All</button>
 </p>
 
-<button id="btnSelectAll">Select all</button>
-<button id="btnSubmit">Get Value</button>
+
 
 <table id="students" class="table text-center">
-    <tr>
-        <th>
+    <thead>
+        <tr>
 
 
 
-            @Html.DisplayNameFor(model => model.FirstName)
+            <th>
 
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.gender)
-        </th>
-        <th>  Status </th>
-        <th>
-            Select All <input type="checkbox" id="checkBoxAll" />
-        </th>
-        <th> Delete </th>
+                @Html.DisplayNameFor(model => model.FirstName)
 
-    </tr>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gender)
+            </th>
+            <th>  Status </th>
 
-    @foreach (var item in Model)
-    {
-        <tr >
-            <td>
-                <a onclick="GetData(@item.Id)" class="anchorDetail">  @Html.DisplayFor(modelItem => item.FirstName)  </a>
+            <th> Delete </th>
+            <th>
+                Select All
+                <input type="checkbox" id="checkBoxAll" />
+            </th>
 
-                @*@Html.DisplayFor(modelItem => item.FirstName, new { onclick=GetData(item.Id) })*@
-
-
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.gender.Name)
-            </td>
-            <td>
-                @if (item.isActive)
-                {
-                    <h5 style="color:limegreen;"> Active </h5>
-                }
-                else
-                {
-                    <h5 style="color:red;"> InActive </h5>
-                }
-            </td>
-            
-            <td class="findtd">
-                <input type="checkbox" id="tick" class="chkCheckBoxId" value="@item.Id" name="StudentId" />
-            </td>
-                
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                @* @Html.ActionLink("Details", "Details", new { id=item.Id }) | *@
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
-            </td>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="row-select">
+                <input type="hidden" name="name" class="check" value="@item.Id" />
+                <td>
+                    <a onclick="GetData(@item.Id)" class="anchorDetail">  @Html.DisplayFor(modelItem => item.FirstName)  </a>
+
+                    @*@Html.DisplayFor(modelItem => item.FirstName, new { onclick=GetData(item.Id) })*@
+
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gender.Name)
+                </td>
+                <td>
+                    @if (item.isActive)
+                    {
+                        <h5 style="color:limegreen;"> Active </h5>
+                    }
+                    else
+                    {
+                        <h5 style="color:red;"> InActive </h5>
+                    }
+                </td>
+
+
+
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                    @* @Html.ActionLink("Details", "Details", new { id=item.Id }) | *@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+                <td>
+                    <input type="checkbox" name="studentIdtoDelete" class="studentIdtoDeletes" value="@item.Id" />
+                </td>
+            </tr>
+        }
+    </tbody>
 
 
 
@@ -147,7 +155,7 @@
 
 
 
-
+@*<link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 
 
 
@@ -156,36 +164,84 @@
 <script src="~/Scripts/bootstrap.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
 <script>
 
 
-
-
     $(document).ready(function () {
-        var Result = new Array();
-        $('#btnSubmit').click(function () {
-
-            $('input[type = checkbox][name = StudentId]: checked').each(function () {
-                var id ;
-                id = $('#tick').val();
-
-                Result.Push(id);
-                alert(id);
-            })
-
-        })
+        $("#students").DataTable({
+            "bJQueryUI": true,
+            "ordering": true,
+            "bSort": false,
+            "bPaginate": true,
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 3
+        });
+        $('#students').removeClass('display').addClass('table table-striped table-bordered');
 
 
-        $('#btnSelectAll').click(function () {
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked"))
+               $('.studentIdtoDeletes').prop('checked', true);
+            else
+                $('.studentIdtoDeletes' ).prop('checked', false);
+        });
 
-            $('.row-select input').each(function () {
-                $(this).prop('checked', true);
-            })
 
-        })
 
-    })
+        if ('@TempData["success"]' != '') {
+           swal("Created","Data added successfully","success");
+        }
 
+        if ('@TempData["dataDeleted"]' != '') {
+           swal("Deleted!","Data Deleted","success");
+       }
+
+
+    });
+
+
+
+
+    $("#btnsubmit").click(function () {
+        debugger;
+        var res = new Array();
+        $('.row-select input:checked').each(function () {
+            var id;
+            id = $(this).closest('tr').find('.check').val();
+            res.push(id);
+            console.log(res);
+        });
+        $.ajax({
+            type: "post",
+            url: "/Home/MultipleDelete",
+            data: { 'multidelete': res },
+            success: function (data) {
+                alert("DONEE");
+                window.location.href = '/home/getallrecords/'
+            },
+            error: function () {
+                alert("Dynamic content load failed");
+            },
+        }
+        )
+
+    });
+
+
+    //$(document).ready(function () {
+    //    $('#checkBoxAll').click(function () {
+    //        if ($(this).is(":checked"))
+    //            $('.studentIdtoDeletes').prop('checked', true);
+    //        else
+    //            $('.studentIdtoDeletes' ).prop('checked', false);
+    //    });
+
+
+    //});
 
 
 
@@ -233,7 +289,7 @@
     }
 
 
-   $(document).ready(function() {
+   @*$(document).ready(function() {
        if ('@TempData["success"]' != '') {
            swal("Created","Data added successfully","success");
        }
@@ -243,7 +299,7 @@
        if ('@TempData["dataDeleted"]' != '') {
            swal("Deleted!","Data Deleted","success");
        }
-  });
+  });*@
 
 
     $('.close').click(function () {
@@ -251,22 +307,6 @@
         $("#myModal").modal('hide');
 
     });
-
-
-
-    $(document).ready(function () {
-        $('#checkBoxAll').click(function () {
-            if ($(this).is(":checked"))
-                $('.chkCheckBoxId').prop('checked', true);
-            else
-                $('.chkCheckBoxId').prop('checked', false);
-        });
-
-
-    });
-
-
-
 
 
 

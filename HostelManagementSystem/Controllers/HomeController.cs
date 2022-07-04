@@ -81,6 +81,26 @@ namespace HostelManagementSystem.Controllers
 
             List<StudentModel> result = repository.GetAllStudents();
             return View(result);
+           // return Json(new { data = result }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+        public ActionResult MultipleDelete(int[] multidelete)
+        {
+            try
+            {
+                repository.MultipleDelete(multidelete);
+
+                return RedirectToAction("GetAllRecords");
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
         }
 
